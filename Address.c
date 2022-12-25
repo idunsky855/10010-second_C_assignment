@@ -12,21 +12,16 @@ int initAddress(Address* pAddress) {
 	
 	pAddress->street = strtok(str, delimiter);
 	if (!pAddress->street) {
-		
-			return 0;
+		return 0;
 	}
 
 	
 	pAddress->houseNumber = strtok(NULL, delimiter);
-	if (!pAddress->houseNumber) {
-		free(pAddress->street);
+	if(!pAddress->houseNumber){
 		return 0;
 	}
-	
 	pAddress->city = strtok(NULL, delimiter);
 	if (!pAddress->city) {
-		free(pAddress->street);
-		free(pAddress->houseNumber);
 		return 0;
 	}
 	
