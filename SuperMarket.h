@@ -1,7 +1,4 @@
 #pragma once
-#include <stdio.h>
-#include <stdlib.h>
-#include "ShoppingCart.h"
 #include "Customer.h"
 #include "Product.h"
 #include "Address.h"
@@ -16,6 +13,6 @@ typedef struct {
 }SuperMarket;
 
 
-void initSuperMarket();
+int initSuperMarket(SuperMarket* pSuperMarket);
 void printSuperMarket(const SuperMarket* pSuperMarket);
 void freeSuperMarket(SuperMarket* pSuperMarket);
