@@ -9,7 +9,7 @@ typedef struct {
 }Address;
 
 
-void initAddress(Address* pAddress);
+int initAddress(Address* pAddress);
 void printAddress(const Address* pAddress);
 void freeAddress(Address* pAddress);
 

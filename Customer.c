@@ -7,7 +7,7 @@
 
 int initCustomer(Customer* pCustomer) {
 
-	pCustomer->name = createDynamicStr("Please enter customers name: ");
+	pCustomer->name = createDynamicStr("Please enter customer's name: ");
 	if (!pCustomer->name)
 		return 0;
 	pCustomer->pCart = NULL; //Empty cart
