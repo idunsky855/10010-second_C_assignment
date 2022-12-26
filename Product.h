@@ -1,6 +1,4 @@
 #pragma once
-#include <stdio.h>
-#include <stdlib.h>
 
 #define PRODUCT_NAME_LEN 20
 #define BARCODE_LEN 7

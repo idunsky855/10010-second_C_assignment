@@ -1,7 +1,4 @@
 #pragma once
-#include <stdio.h>
-#include <stdlib.h>
-#include "Product.h"
 
 #define BARCODE_LEN 7
 
