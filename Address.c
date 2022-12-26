@@ -10,17 +10,17 @@ int initAddress(Address* pAddress) {
 	fgets(str,MAX_STR_SIZE,stdin);
 	char delimiter = '#';
 	
-	pAddress->street = strtok(str, delimiter);
+	//pAddress->street = strtok(str, delimiter);
 	if (!pAddress->street) {
 		return 0;
 	}
 
 	
-	pAddress->houseNumber = strtok(NULL, delimiter);
+	//pAddress->houseNumber = strtok(NULL, delimiter);
 	if(!pAddress->houseNumber){
 		return 0;
 	}
-	pAddress->city = strtok(NULL, delimiter);
+	//pAddress->city = strtok(NULL, delimiter);
 	if (!pAddress->city) {
 		return 0;
 	}

@@ -23,6 +23,7 @@ int initProduct();
 void printProduct(const Product* pProduct);
 void freeProduct(Product* pProduct);
 void scanBarcode(Product* pProduct);
+void getValidBarcode(char* temp);
 int countLowerCaseLetters(const char* str);
 int countDigits(const char* str);
 void scanProductName(Product* pProduct);

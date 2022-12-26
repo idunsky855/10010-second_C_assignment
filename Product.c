@@ -30,26 +30,32 @@ void printProduct(const Product* pProduct) {
 //scans valid barcode for product
 void scanBarcode(Product* pProduct) {
 	char temp[TEMP_BARCODE_LEN];
+	getValidBarcode(temp);
+	strcpy(pProduct->barcode, temp);
+	pProduct->barcode[BARCODE_LEN] = '\0';
+}
+
+void getValidBarcode(char* temp) {
 	int numOfDigits;
 	do {
 		printf("\nEnter product barcode Code should be of 7 length exactly\nUPPER CASE letter and digits\nMust have 3 to 5 digits\nFirst and last chars must be UPPER CASE letter\nFor example A12B40C\n\n");
-		fgets(temp,TEMP_BARCODE_LEN,stdin);
-		
+		fgets(temp, TEMP_BARCODE_LEN, stdin);
+
 		numOfDigits = countDigits(temp); // count of digits in the barcode
-		
-		if (strlen(temp) != BARCODE_LEN+1) {// barcode is not 7 chars
+
+		if (strlen(temp) != BARCODE_LEN + 1) {// barcode is not 7 chars
 			printf("Code should be of 7 length exactly");
 		}
 		else if (countLowerCaseLetters(temp)) { // there are lower case letters in barcode
 			printf("Code cannot contain lower case letters!");
 		}
-		else if (!isupper(temp[0]) || !isupper(temp[BARCODE_LEN-1])){ //first and last chars are not UPPER CASE
+		else if (!isupper(temp[0]) || !isupper(temp[BARCODE_LEN - 1])) { //first and last chars are not UPPER CASE
 			printf("First and last chars must be UPPER CASE letters!!");
 		}
-		else if (numOfDigits < 3 ||numOfDigits > 5 ) { //the are not 3-5 digits in barcode
+		else if (numOfDigits < 3 || numOfDigits > 5) { //the are not 3-5 digits in barcode
 			printf("Must have 3 to 5 digits!");
 		}
-		else if(!validChars(temp)) {
+		else if (!validChars(temp)) {
 			printf("Only UPPER CASE letters and digits!");
 		}
 		else {
@@ -57,9 +63,6 @@ void scanBarcode(Product* pProduct) {
 		}
 		printf("\n"); //cosmetic
 	} while (1);
-
-	strcpy(pProduct->barcode, temp);
-	pProduct->barcode[BARCODE_LEN] = '\0';
 }
 
 int validChars(const char* str){
@@ -150,7 +153,7 @@ void scanProductStock(Product* pProduct) {
 		scanf("%d", &stock);
 		getchar(); //buffer clean!
 		if (stock < 0) { //check if not valid
-			printf("\stock cannot be negative\n");
+			printf("stock cannot be negative\n");
 		}
 		else {
 			break; // valid
