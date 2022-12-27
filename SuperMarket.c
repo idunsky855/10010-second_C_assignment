@@ -56,3 +56,38 @@ void freeSuperMarket(SuperMarket* pSuperMarket) {
 	}
 	free(pSuperMarket);
 }
+
+int addProductToSuperMarket(SuperMarket* pSuperMarket) {
+	if (!reallocProductsArray(pSuperMarket)) { //allocates product array
+		return 0;
+	}
+
+	Product* tempProd = (Product*)malloc(sizeof(Product));
+	if (!tempProd) {
+		return 0;
+	}
+
+	if(!initProduct(tempProd)){
+		return 0;
+	}
+
+	return 1;	
+}
+
+//allocates or extends products array by 1
+int reallocProductsArray(SuperMarket* pSuperMarket) {
+	if (!pSuperMarket->products) {
+		pSuperMarket->products = (Product*)malloc(sizeof(Product));
+		if (!pSuperMarket->products) { //check if not allocated
+			return 0;
+		}
+	}
+	
+	Product* pTemp = (Product*)relloc(sizeof(Product) * (pSuperMarket->numOfProducts + 1));
+	if (!pTemp) {
+			return 0;
+	}
+	pSuperMarket->products = pTemp;
+	return 1;
+}
+

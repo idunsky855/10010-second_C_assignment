@@ -16,3 +16,5 @@ typedef struct {
 int initSuperMarket(SuperMarket* pSuperMarket);
 void printSuperMarket(const SuperMarket* pSuperMarket);
 void freeSuperMarket(SuperMarket* pSuperMarket);
+int addProductToSuperMarket(SuperMarket* pSuperMarket);
+int reallocProductsArray(SuperMarket* pSuperMarket);
