@@ -20,3 +20,4 @@ int addProductToSuperMarket(SuperMarket* pSuperMarket);
 int reallocProductsArray(SuperMarket* pSuperMarket);
 int addProductToArray(SuperMarket* pSuperMarket, Product* pProduct);
 int findBarcode(SuperMarket* pSuperMarket, const char* barcode);
+int addCustomer(SuperMarket* pSuperMarket);

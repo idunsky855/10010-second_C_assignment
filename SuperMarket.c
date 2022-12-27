@@ -37,7 +37,7 @@ void printSuperMarket(const SuperMarket* pSuperMarket) {
 		printProduct(&pSuperMarket->products[i]);
 	}
 
-	printf("There are %d listed customers", pSuperMarket->numOfCustomers);
+	printf("There are %d listed customers\n", pSuperMarket->numOfCustomers);
 	for (int i = 0; i < pSuperMarket->numOfCustomers; i++) {
 		printCustomer(&pSuperMarket->customers[i]);
 	}
@@ -98,7 +98,6 @@ int reallocProductsArray(SuperMarket* pSuperMarket) {
 	return 1;
 }
 
-
 //adds a new product to array
 int addProductToArray(SuperMarket* pSuperMarket, Product* pProduct) {
 		if (!reallocProductsArray(pSuperMarket)) { //allocates product array
@@ -120,4 +119,28 @@ int findBarcode(SuperMarket* pSuperMarket, const char* barcode) {
 		}
 	}
 	return -1;
+}
+
+//add customer to supermarket
+int addCustomer(SuperMarket* pSuperMarket) {
+	Customer* tempCustomer = (Customer*)malloc(sizeof(Customer));
+	initCustomer(tempCustomer);
+	for (int i = 0; i < pSuperMarket->numOfCustomers; i++) {
+		if (!strcmp(pSuperMarket->customers[i].name, tempCustomer->name)) {
+			printf("Customer already exist, cannot add him/her again!\n\n");
+			freeCustomer(tempCustomer);
+			return 0;
+		}
+	}
+	if (!pSuperMarket->customers) {
+		pSuperMarket->customers = (Customer*)malloc(sizeof(Customer));
+	}
+	else {
+		pSuperMarket->customers = (Customer*)realloc(pSuperMarket->customers, sizeof(Customer) * (pSuperMarket->numOfCustomers + 1));
+	}
+	if (!pSuperMarket->customers) { //if couldnt allocate memmory
+		return 0;
+	}
+	pSuperMarket->customers[pSuperMarket->numOfCustomers++] = *tempCustomer;
+	return 1;
 }

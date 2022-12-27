@@ -29,10 +29,10 @@ void printCustomer(const Customer* pCustomer) {
 	printf("Customer's name: %s", pCustomer->name);
 	printf("\t\t");
 	if (!pCustomer->pCart) {
-		printf("Shopping cart is empty!\n\n");
+		printf("Shopping cart is empty!\n");
 		return;
 	}
-	printf("Doing shopping now!!!");
+	printf("Doing shopping now!!!\n");
 }
 
 
@@ -42,9 +42,11 @@ char* createDynamicStr(const char* msg) {
 	printf(msg);
 
 	fgets(temp, MAX_STR_LEN, stdin);
-	str = (char*)malloc((strlen(temp) + 1) * sizeof(char));
+	int size = strlen(temp);
+	str = (char*)malloc((size + 1) * sizeof(char));
 	if (!str)
 		return NULL;
 	strcpy(str, temp);
+	str[size - 1] = '\0';
 	return str;
 }

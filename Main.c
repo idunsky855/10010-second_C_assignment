@@ -6,9 +6,9 @@
 void main() {
 	SuperMarket super;
 	initSuperMarket(&super);
-	addProductToSuperMarket(&super);
-	addProductToSuperMarket(&super);
-	addProductToSuperMarket(&super);
+	addCustomer(&super);
+	addCustomer(&super);
+	addCustomer(&super);
 	printSuperMarket(&super);
 
 
