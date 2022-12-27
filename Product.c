@@ -9,12 +9,11 @@ const char* typeStrings[numOfTypes] = { "Shelf","Frozen","Fridge","FruiyVegtable
 
 int initProduct(Product* pProduct) {
 	if (!pProduct) return 0; //check if pProduct is NULL
-	
-	scanBarcode(pProduct);
+
 	scanProductName(pProduct);
 	scanProductType(pProduct);
 	scanProductPrice(pProduct);
-	scanProductStock(pProduct);
+	scanProductStock(pProduct,0);
 	return 1;
 }
 
@@ -146,10 +145,16 @@ void scanProductPrice(Product* pProduct) {
 	pProduct->price = price;
 }
 
-void scanProductStock(Product* pProduct) {
+//if flag = 0 init stock, else update stock
+void scanProductStock(Product* pProduct,int flag) {
 	int stock;
 	do {
-		printf("Please enter product stock: \n");
+		if (!flag) {
+			printf("Please enter product stock: \n");
+		}
+		else {
+			printf("How many items to add to stock?: \n");
+		}
 		scanf("%d", &stock);
 		getchar(); //buffer clean!
 		if (stock < 0) { //check if not valid
@@ -159,6 +164,12 @@ void scanProductStock(Product* pProduct) {
 			break; // valid
 		}
 	} while (1);
-	pProduct->stock = stock;
-}
 
+	if (!flag) {
+		pProduct->stock = stock;
+	}
+	else {
+		pProduct->stock += stock;
+	}
+	
+}

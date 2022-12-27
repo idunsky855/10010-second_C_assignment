@@ -27,4 +27,6 @@ int countDigits(const char* str);
 void scanProductName(Product* pProduct);
 void scanProductType(Product* pProduct);
 void scanProductPrice(Product* pProduct);
-void scanProductStock(Product* pProduct);
+void scanProductStock(Product* pProduct,int flag);
+int validChars(const char* str);
+

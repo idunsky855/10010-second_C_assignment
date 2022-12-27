@@ -1,18 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "Product.h"
+#include "SuperMarket.h"
 
 
 void main() {
-
-	
-	Product* p = (Product*)malloc(sizeof(Product));
-	initProduct(p);
-	printProduct(p);
-
-
-
-
+	SuperMarket super;
+	initSuperMarket(&super);
+	addProductToSuperMarket(&super);
+	addProductToSuperMarket(&super);
+	addProductToSuperMarket(&super);
+	printSuperMarket(&super);
 
 
 

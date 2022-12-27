@@ -22,7 +22,6 @@ int initSuperMarket(SuperMarket* pSuperMarket) {
 	return 1;
 }
 
-
 void printSuperMarket(const SuperMarket* pSuperMarket) {
 	printf("Super Market name: %s\nAddress:", pSuperMarket->name);
 	printAddress(&pSuperMarket->address);
@@ -42,7 +41,7 @@ void printSuperMarket(const SuperMarket* pSuperMarket) {
 	for (int i = 0; i < pSuperMarket->numOfCustomers; i++) {
 		printCustomer(&pSuperMarket->customers[i]);
 	}
-	printf("\n"); //cosmetic
+	printf("\n\n"); //cosmetic
 }
 
 void freeSuperMarket(SuperMarket* pSuperMarket) {
@@ -58,17 +57,24 @@ void freeSuperMarket(SuperMarket* pSuperMarket) {
 }
 
 int addProductToSuperMarket(SuperMarket* pSuperMarket) {
-	if (!reallocProductsArray(pSuperMarket)) { //allocates product array
-		return 0;
-	}
-
 	Product* tempProd = (Product*)malloc(sizeof(Product));
 	if (!tempProd) {
 		return 0;
 	}
-
-	if(!initProduct(tempProd)){
-		return 0;
+	
+	scanBarcode(tempProd); //scan barcode to check if exist
+	int index = findBarcode(pSuperMarket, tempProd->barcode);
+	if (index == -1) { //product doesnt exist
+		if (!initProduct(tempProd)) {
+			freeProduct(tempProd);
+			return 0;
+		}
+		if (!addProductToArray(pSuperMarket, tempProd)) {
+			freeProduct(tempProd);
+		}
+	}
+	else {
+		scanProductStock(&pSuperMarket->products[index],1); //update stock
 	}
 
 	return 1;	
@@ -76,18 +82,42 @@ int addProductToSuperMarket(SuperMarket* pSuperMarket) {
 
 //allocates or extends products array by 1
 int reallocProductsArray(SuperMarket* pSuperMarket) {
-	if (!pSuperMarket->products) {
+	
+	if (!pSuperMarket->products) { //if NULL
 		pSuperMarket->products = (Product*)malloc(sizeof(Product));
+
 		if (!pSuperMarket->products) { //check if not allocated
 			return 0;
 		}
 	}
 	
-	Product* pTemp = (Product*)relloc(sizeof(Product) * (pSuperMarket->numOfProducts + 1));
-	if (!pTemp) {
-			return 0;
+	pSuperMarket->products = (Product*)realloc(pSuperMarket->products , sizeof(Product) * (pSuperMarket->numOfProducts + 1));
+	if (!pSuperMarket->products) {
+		return 0;
 	}
-	pSuperMarket->products = pTemp;
 	return 1;
 }
 
+
+//adds a new product to array
+int addProductToArray(SuperMarket* pSuperMarket, Product* pProduct) {
+		if (!reallocProductsArray(pSuperMarket)) { //allocates product array
+			return 0;
+		}
+		pSuperMarket->products[pSuperMarket->numOfProducts++] = *pProduct; //insert product to array
+		return 1;
+}
+
+//returns index of product if the barcode exists, returns -1 if doesnt exist in productArray
+int findBarcode(SuperMarket* pSuperMarket, const char* barcode) {
+	if (!pSuperMarket->products) { //no products at all!
+		return -1;
+	}
+	
+	for (int i = 0; i < pSuperMarket->numOfProducts; i++) {
+		if (!strcmp(barcode, pSuperMarket->products[i].barcode)) {
+			return i; //return index of product
+		}
+	}
+	return -1;
+}

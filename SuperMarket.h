@@ -18,3 +18,5 @@ void printSuperMarket(const SuperMarket* pSuperMarket);
 void freeSuperMarket(SuperMarket* pSuperMarket);
 int addProductToSuperMarket(SuperMarket* pSuperMarket);
 int reallocProductsArray(SuperMarket* pSuperMarket);
+int addProductToArray(SuperMarket* pSuperMarket, Product* pProduct);
+int findBarcode(SuperMarket* pSuperMarket, const char* barcode);
