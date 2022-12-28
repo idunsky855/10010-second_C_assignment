@@ -54,7 +54,7 @@ void main() {
 		}
 		//print shopping cart
 		case 4: {
-
+			printShoppingCartFromSuperMarket(&super);
 			break;
 		}
 		//customer pay

@@ -100,7 +100,7 @@ int countDigits(const char* str) {
 
 //scans product name
 void scanProductName(Product* pProduct) {
-	printf("Please enter product's name: \n");
+	printf("Please enter product's name (up to 20 chars): \n");
 	fgets(pProduct->name,PRODUCT_NAME_LEN,stdin);// assuming the products name can contain numbers
 	pProduct->name[strlen(pProduct->name)-1] = '\0';
 }
@@ -109,7 +109,7 @@ void scanProductName(Product* pProduct) {
 void scanProductType(Product* pProduct) {
 	int type;
 	do {
-		printf("Please enter one of the following: ");
+		printf("\nPlease enter one of the following: ");
 		for (int i = 0; i < numOfTypes; i++) {
 			printf("\n%d for %s", i, typeStrings[i]);
 		}

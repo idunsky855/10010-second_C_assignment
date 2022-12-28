@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "SuperMarket.h"
 
 #define NUM_UNDERSCORES 74 //cosmetic
@@ -25,23 +26,26 @@ int initSuperMarket(SuperMarket* pSuperMarket) {
 void printSuperMarket(const SuperMarket* pSuperMarket) {
 	printf("Super Market name: %s\nAddress:", pSuperMarket->name);
 	printAddress(&pSuperMarket->address);
-	printf("\nThere are %d products\n", pSuperMarket->numOfProducts);
-	printf("%-25s%-15s%-20s%-10s%-4s\n", "Name", "Barcode", "Type", "Price", "Count in stock");
-	
-	for (int i = 0 ; i < NUM_UNDERSCORES ; i++) {//cosmetic
-		printf("_");
-	}
-	printf("\n"); //cosmetic
-
-	for (int i = 0 ; i < pSuperMarket->numOfProducts ; i++ ) {
-		printProduct(&pSuperMarket->products[i]);
-	}
-
+	printAllProducts(pSuperMarket);
 	printf("There are %d listed customers\n", pSuperMarket->numOfCustomers);
 	for (int i = 0; i < pSuperMarket->numOfCustomers; i++) {
 		printCustomer(&pSuperMarket->customers[i]);
 	}
 	printf("\n\n"); //cosmetic
+}
+
+
+void printAllProducts(const SuperMarket* pSuperMarket) {
+	printf("\nThere are %d products\n", pSuperMarket->numOfProducts);
+	printf("%-25s%-15s%-20s%-10s%-4s\n", "Name", "Barcode", "Type", "Price", "Count in stock");
+	for (int i = 0; i < NUM_UNDERSCORES; i++) {//cosmetic
+		printf("_");
+	}
+	printf("\n"); //cosmetic
+
+	for (int i = 0; i < pSuperMarket->numOfProducts; i++) {
+		printProduct(&pSuperMarket->products[i]);
+	}
 }
 
 void freeSuperMarket(SuperMarket* pSuperMarket) {
@@ -128,12 +132,10 @@ int addCustomer(SuperMarket* pSuperMarket) {
 		return 0;
 	}
 	initCustomer(tempCustomer);
-	for (int i = 0; i < pSuperMarket->numOfCustomers; i++) {
-		if (!strcmp(pSuperMarket->customers[i].name, tempCustomer->name)) {
-			printf("Customer already exist, cannot add him/her again!\n\n");
-			freeCustomer(tempCustomer);
-			return 0;
-		}
+	if (getCustomerIndex(pSuperMarket, tempCustomer->name) != -1) {
+		printf("Customer already exist, cannot add him/her again!\n\n");
+		freeCustomer(tempCustomer);
+		return 0;
 	}
 	if (!pSuperMarket->customers) {
 		pSuperMarket->customers = (Customer*)malloc(sizeof(Customer));
@@ -150,8 +152,9 @@ int addCustomer(SuperMarket* pSuperMarket) {
 
 //print product by type 
 void printProdByType(SuperMarket* pSuperMarket) {
-	if (!pSuperMarket->products) {
-		printf("There are no products in the market!!");
+	if (!pSuperMarket->numOfProducts) {
+		printf("\nThere are no products in the market!!\n\n");
+		return;
 	}
 	int count = 0;
 	Product pProd;
@@ -163,6 +166,42 @@ void printProdByType(SuperMarket* pSuperMarket) {
 		}
 	}
 	if (count == 0) {
-		printf("There are no product of this type in the market");
+		printf("\nThere are no product of this type in the market\n\n");
 	}
+}
+
+void printShoppingCartFromSuperMarket(SuperMarket* pSuperMarket) {
+	if (!pSuperMarket->customers) {
+		printf("There are no registered customers!");
+		return;
+	}
+	if (!pSuperMarket->products) {
+		printf("There are no products in market!");
+	}
+	printf("There are %d listed customers:\n",pSuperMarket->numOfCustomers);
+	for (int i = 0; i < pSuperMarket->numOfCustomers; i++) {
+		printCustomer(&pSuperMarket->customers[i]);
+	}
+	char* tempName = createDynamicStr("Who is shopping? Enter the name:\n");
+	int index = getCustomerIndex(pSuperMarket, tempName);
+	if (index == -1) {
+		printf("no such customer!");
+		free(tempName);
+		return;
+	}
+	printCustomerShoppingCart(&pSuperMarket->customers[index]);
+}
+
+//returns index of customer if name is in the array, else -1 
+int getCustomerIndex(SuperMarket* pSuperMarket,const char* name) {
+	if (!pSuperMarket->numOfCustomers) {
+		return -1;
+	}
+	for (int i = 0; i < pSuperMarket->numOfCustomers; i++) {
+		if (!strcmp(pSuperMarket->customers[i].name,name)) {
+			return i;
+		}
+	}
+	return -1;
+	
 }

@@ -1,5 +1,7 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "Product.h"
 #include "ShoppingItem.h"
 
@@ -17,6 +19,6 @@ void printShoppingItem(const ShoppingItem* pShoppingItem) {
 	////////////////////////////////////////////////
 }
 
-void freeShopingItem(ShoppingItem* pShoppingItem) {
-	////////////////////////////////////////////////
+void freeShoppingItem(ShoppingItem* pShoppingItem) {
+	free(pShoppingItem);
 }

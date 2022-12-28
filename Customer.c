@@ -1,5 +1,7 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "Customer.h"
 
 #define MAX_STR_LEN 255
@@ -49,4 +51,12 @@ char* createDynamicStr(const char* msg) {
 	strcpy(str, temp);
 	str[size - 1] = '\0';
 	return str;
+}
+
+void startShopping(Customer* pCustomer) {
+	
+}
+
+void printCustomerShoppingCart(Customer* pCustomer) {
+	printShoppingCart(pCustomer->pCart);
 }

@@ -15,6 +15,7 @@ typedef struct {
 
 int initSuperMarket(SuperMarket* pSuperMarket);
 void printSuperMarket(const SuperMarket* pSuperMarket);
+void printAllProducts(const SuperMarket* pSuperMarket);
 void freeSuperMarket(SuperMarket* pSuperMarket);
 int addProductToSuperMarket(SuperMarket* pSuperMarket);
 int reallocProductsArray(SuperMarket* pSuperMarket);
@@ -22,3 +23,5 @@ int addProductToArray(SuperMarket* pSuperMarket, Product* pProduct);
 int findBarcode(SuperMarket* pSuperMarket, const char* barcode);
 int addCustomer(SuperMarket* pSuperMarket);
 void printProdByType(SuperMarket* pSuperMarket);
+void printShoppingCartFromSuperMarket(SuperMarket* pSuperMarket);
+int getCustomerIndex(SuperMarket* pSuperMarket, const char* name);
