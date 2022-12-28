@@ -51,8 +51,6 @@ char* createDynamicStr(const char* msg) {
 	return str;
 }
 
-
-
 void printCustomerShoppingCart(Customer* pCustomer) {
 	printShoppingCart(pCustomer->pCart);
 }
@@ -77,6 +75,7 @@ int customerPayment(Customer* pCustomer) {
 	
 	printShoppingCart(pCustomer->pCart);
 	freeShoppingCart(pCustomer->pCart);
+	pCustomer->pCart = NULL;
 	printf("\n------------Payment received------------\n");
 	return 1;
 }
