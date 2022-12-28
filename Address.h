@@ -1,13 +1,24 @@
 #pragma once
+#define _CRT_SECURE_NO_WARNINGS
+#define MAXLENGTH 255
+#define MAXDELIMITERS 2
 
 typedef struct {
+
+	unsigned int houseNumber;
 	char* street;
 	char* city;
-	char* houseNumber;
 }Address;
 
 
-int initAddress(Address* pAddress);
-void printAddress(const Address* pAddress);
-void freeAddress(Address* pAddress);
+int initAddress(Address* address);
+void format_name(char* name);
+void format_address(Address* address);
+void printAddress(const Address* address);
+void freeAddress(Address* address);
+char* remove_white_spaces(char* str);
+int countDelimiters(char* str);
+
+
+
 

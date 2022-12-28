@@ -269,3 +269,20 @@ int areThereCustomersAndProducts(SuperMarket* pSuperMarket) {
 	}
 	return 1;
 }
+
+//customer pay
+void superMarketPayment(SuperMarket* pSuperMarket) {
+	if (!areThereCustomersAndProducts(pSuperMarket)) {
+		return;
+	}
+	char* tempName = createDynamicStr("\nWho is shopping? Enter the name:\n");
+	int index = getCustomerIndex(pSuperMarket, tempName);
+	free(tempName);
+	if (index == -1) {
+		printf("\nThere is no such customer\nError in shopping!!\n\n");
+		return;
+	}
+	if (!customerPayment(&pSuperMarket->customers[index])) {
+		printf("\nsomething went wrong, payment failed!\n");
+	}
+}

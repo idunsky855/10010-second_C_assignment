@@ -59,7 +59,7 @@ void main() {
 		}
 		//customer pay
 		case 5: {
-			///////////////////////////////////////////////////////
+			superMarketPayment(&super);
 			break;
 		}
 		//print product by type
@@ -69,7 +69,8 @@ void main() {
 		}
 		//quit menu
 		case -1: {
-
+			printf("Thank you, bye bye!!");
+			freeSuperMarket(&super);
 			break;
 		}
 		default:

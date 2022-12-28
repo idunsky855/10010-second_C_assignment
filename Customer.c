@@ -51,10 +51,7 @@ char* createDynamicStr(const char* msg) {
 	return str;
 }
 
-void shop(Customer* pCustomer) {
 
-	
-}
 
 void printCustomerShoppingCart(Customer* pCustomer) {
 	printShoppingCart(pCustomer->pCart);
@@ -71,4 +68,15 @@ void customerAddShoppingItem(Customer* pCustomer, Product* pProduct, int count) 
 		printf("Error ocoured while adding your product to cart.");
 		return;
 	}
+}
+
+int customerPayment(Customer* pCustomer) {
+	if (!pCustomer->pCart) {
+		return 0;
+	}
+	
+	printShoppingCart(pCustomer->pCart);
+	freeShoppingCart(pCustomer->pCart);
+	printf("\n------------Payment received------------\n");
+	return 1;
 }

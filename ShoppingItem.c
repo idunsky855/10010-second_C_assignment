@@ -7,7 +7,6 @@
 
 
 int initShoppingItem(ShoppingItem* pShoppingItem, const char* barcode, const float price, int count) {
-	char temp[TEMP_BARCODE_LEN];
 	strcpy(pShoppingItem->barcode, barcode);
 	pShoppingItem->price = price;
 	pShoppingItem->count = count;
@@ -15,7 +14,7 @@ int initShoppingItem(ShoppingItem* pShoppingItem, const char* barcode, const flo
 }
 
 void printShoppingItem(const ShoppingItem* pShoppingItem) {
-	////////////////////////////////////////////////
+	printf("Item -%20s, count -%6d price per item -%10.2f\n",pShoppingItem->barcode, pShoppingItem->count, pShoppingItem->price);
 }
 
 void freeShoppingItem(ShoppingItem* pShoppingItem) {

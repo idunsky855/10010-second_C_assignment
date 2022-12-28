@@ -12,6 +12,6 @@ int initCustomer(Customer* pCustomer);
 void freeCustomer(Customer* pCustomer);
 void printCustomer(const Customer* pCustomer);
 char* createDynamicStr(const char* msg);
-void shop(Customer* pCustomer);
 void printCustomerShoppingCart(Customer* pCustomer);
 void customerAddShoppingItem(Customer* pCustomer, Product* pProduct, int count);
+int customerPayment(Customer* pCustomer);
