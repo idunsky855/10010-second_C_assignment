@@ -7,7 +7,6 @@
 typedef enum {Shelf, Frozen, Fridge,FruitVegtable,numOfTypes} ProductType;
 
 
-
 typedef struct {
 	char name[PRODUCT_NAME_LEN+1];
 	char barcode[BARCODE_LEN + 1]; //CAPS and digits only!!!

@@ -124,6 +124,9 @@ int findBarcode(SuperMarket* pSuperMarket, const char* barcode) {
 //add customer to supermarket
 int addCustomer(SuperMarket* pSuperMarket) {
 	Customer* tempCustomer = (Customer*)malloc(sizeof(Customer));
+	if (!tempCustomer) {
+		return 0;
+	}
 	initCustomer(tempCustomer);
 	for (int i = 0; i < pSuperMarket->numOfCustomers; i++) {
 		if (!strcmp(pSuperMarket->customers[i].name, tempCustomer->name)) {
@@ -143,4 +146,23 @@ int addCustomer(SuperMarket* pSuperMarket) {
 	}
 	pSuperMarket->customers[pSuperMarket->numOfCustomers++] = *tempCustomer;
 	return 1;
+}
+
+//print product by type 
+void printProdByType(SuperMarket* pSuperMarket) {
+	if (!pSuperMarket->products) {
+		printf("There are no products in the market!!");
+	}
+	int count = 0;
+	Product pProd;
+	scanProductType(&pProd);
+	for (int i = 0; i < pSuperMarket->numOfProducts; i++) {
+		if (pProd.type == pSuperMarket->products[i].type) {
+			printProduct(&pSuperMarket->products[i]);
+			count++;
+		}
+	}
+	if (count == 0) {
+		printf("There are no product of this type in the market");
+	}
 }
