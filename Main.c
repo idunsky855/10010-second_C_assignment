@@ -49,7 +49,7 @@ void main() {
 		}
 		//customer shopping
 		case 3: {
-
+			customerShopping(&super);
 			break;
 		}
 		//print shopping cart
@@ -59,7 +59,7 @@ void main() {
 		}
 		//customer pay
 		case 5: {
-
+			///////////////////////////////////////////////////////
 			break;
 		}
 		//print product by type

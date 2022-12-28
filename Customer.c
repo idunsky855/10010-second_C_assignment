@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Customer.h"
+#include "Product.h" //here to prevent double headering
 
 #define MAX_STR_LEN 255
 
@@ -25,8 +26,6 @@ void freeCustomer(Customer* pCustomer) {
 	free(pCustomer);
 }
 
-
-
 void printCustomer(const Customer* pCustomer) {
 	printf("Customer's name: %s", pCustomer->name);
 	printf("\t\t");
@@ -36,7 +35,6 @@ void printCustomer(const Customer* pCustomer) {
 	}
 	printf("Doing shopping now!!!\n");
 }
-
 
 char* createDynamicStr(const char* msg) {
 	char* str;
@@ -53,10 +51,24 @@ char* createDynamicStr(const char* msg) {
 	return str;
 }
 
-void startShopping(Customer* pCustomer) {
+void shop(Customer* pCustomer) {
+
 	
 }
 
 void printCustomerShoppingCart(Customer* pCustomer) {
 	printShoppingCart(pCustomer->pCart);
+}
+
+void customerAddShoppingItem(Customer* pCustomer, Product* pProduct, int count) {
+	if (!pCustomer->pCart) {
+		pCustomer->pCart = (ShoppingCart*)malloc(sizeof(ShoppingCart));
+		if (!initShoppingCart(pCustomer->pCart)) {
+			return; 
+		}
+	}
+	if (!addShoppingItemToCart(pCustomer->pCart, pProduct->barcode, pProduct->price, count)){
+		printf("Error ocoured while adding your product to cart.");
+		return;
+	}
 }

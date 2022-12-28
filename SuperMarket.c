@@ -1,3 +1,4 @@
+#define  _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -24,7 +25,7 @@ int initSuperMarket(SuperMarket* pSuperMarket) {
 }
 
 void printSuperMarket(const SuperMarket* pSuperMarket) {
-	printf("Super Market name: %s\nAddress:", pSuperMarket->name);
+	printf("\nSuper Market name: %s\nAddress:", pSuperMarket->name);
 	printAddress(&pSuperMarket->address);
 	printAllProducts(pSuperMarket);
 	printf("There are %d listed customers\n", pSuperMarket->numOfCustomers);
@@ -133,7 +134,7 @@ int addCustomer(SuperMarket* pSuperMarket) {
 	}
 	initCustomer(tempCustomer);
 	if (getCustomerIndex(pSuperMarket, tempCustomer->name) != -1) {
-		printf("Customer already exist, cannot add him/her again!\n\n");
+		printf("\nCustomer already exist, cannot add him/her again!\n\n");
 		freeCustomer(tempCustomer);
 		return 0;
 	}
@@ -170,38 +171,101 @@ void printProdByType(SuperMarket* pSuperMarket) {
 	}
 }
 
+//print shopping cart
 void printShoppingCartFromSuperMarket(SuperMarket* pSuperMarket) {
-	if (!pSuperMarket->customers) {
-		printf("There are no registered customers!");
+	if (!areThereCustomersAndProducts(pSuperMarket)) {
 		return;
 	}
-	if (!pSuperMarket->products) {
-		printf("There are no products in market!");
-	}
-	printf("There are %d listed customers:\n",pSuperMarket->numOfCustomers);
-	for (int i = 0; i < pSuperMarket->numOfCustomers; i++) {
-		printCustomer(&pSuperMarket->customers[i]);
-	}
-	char* tempName = createDynamicStr("Who is shopping? Enter the name:\n");
-	int index = getCustomerIndex(pSuperMarket, tempName);
+	char* tempName = createDynamicStr("\nWho is shopping? Enter the name:\n");
+	int index = getCustomerIndex(pSuperMarket,tempName);
 	if (index == -1) {
-		printf("no such customer!");
-		free(tempName);
+		printf("\nno such customer!\n");
 		return;
 	}
 	printCustomerShoppingCart(&pSuperMarket->customers[index]);
 }
 
-//returns index of customer if name is in the array, else -1 
+//scans a name and returns index of customer is in the array, else -1 
 int getCustomerIndex(SuperMarket* pSuperMarket,const char* name) {
 	if (!pSuperMarket->numOfCustomers) {
 		return -1;
 	}
+	
 	for (int i = 0; i < pSuperMarket->numOfCustomers; i++) {
 		if (!strcmp(pSuperMarket->customers[i].name,name)) {
+			
 			return i;
 		}
 	}
 	return -1;
 	
+}
+
+//customer shopping
+void customerShopping(SuperMarket* pSuperMarket) {
+	if (!areThereCustomersAndProducts(pSuperMarket)) return;
+	char* tempName = createDynamicStr("\nWho is shopping? Enter the name:\n");
+	int index = getCustomerIndex(pSuperMarket,tempName);
+	free(tempName);
+	if (index == -1) {
+		printf("\nThere is no such customer\nError in shopping!!\n\n");
+		return;
+	}
+	printAllProducts(pSuperMarket);
+	Product temp;
+	int productIndex;
+	while(doYouWantToShop()) {
+		do {
+			scanBarcode(&temp);
+			productIndex = findBarcode(pSuperMarket, temp.barcode);
+		} while (productIndex == -1);
+		if (pSuperMarket->products[productIndex].stock == 0) {
+			printf("\nOut of stock!!\n\n");
+			return;
+		}
+		int count = getHowManyItems(pSuperMarket->products[productIndex].stock);
+		pSuperMarket->products[productIndex].stock -= count;
+		customerAddShoppingItem(&pSuperMarket->customers[index],&pSuperMarket->products[productIndex], count);
+	}
+}
+
+//scans how many of an item the customer wants
+int getHowManyItems(int max) {
+	int numOfProd;
+	do {
+		printf("\nHow many items do you want? max %d\n", max);
+		scanf("%d", &numOfProd);
+		getchar();//buffer clean
+	} while (numOfProd < 0 || numOfProd > max);
+	return numOfProd;
+}
+
+//scans if the customer wants to shop
+int doYouWantToShop() {
+	printf("\ndo you want to shop for a product? y/Y, any other char to exit!!\n");
+	char c;
+	scanf("%c", &c);
+	getchar();
+	if (c != 'y' && c != 'Y') {
+		printf("\n-----------Shopping Ended-----------\n\n");
+		return 0;
+	}
+	return 1;
+}
+
+//checks if there are customers and products, returns 0 if not
+int areThereCustomersAndProducts(SuperMarket* pSuperMarket) {
+	if (!pSuperMarket->customers) {
+		printf("\nThere are no registered customers!\n");
+		return 0;
+	}
+	if (!pSuperMarket->products) {
+		printf("\nThere are no products in market!\n");
+		return 0;
+	}
+	printf("\nThere are %d listed customers:\n", pSuperMarket->numOfCustomers);
+	for (int i = 0; i < pSuperMarket->numOfCustomers; i++) {
+		printCustomer(&pSuperMarket->customers[i]);
+	}
+	return 1;
 }

@@ -5,7 +5,7 @@
 #include <string.h>
 #include "Product.h"
 
-const char* typeStrings[numOfTypes] = { "Shelf","Frozen","Fridge","FruiyVegtable" };
+const char* typeStrings[numOfTypes] = { "Shelf","Frozen","Fridge","FruitVegtable" };
 
 int initProduct(Product* pProduct) {
 	if (!pProduct) return 0; //check if pProduct is NULL
@@ -171,5 +171,4 @@ void scanProductStock(Product* pProduct,int flag) {
 	else {
 		pProduct->stock += stock;
 	}
-	
 }
