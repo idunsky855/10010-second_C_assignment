@@ -70,6 +70,7 @@ void main() {
 		//quit menu
 		case -1: {
 			printf("Thank you, bye bye!!");
+			checkOutForExit(&super);
 			freeSuperMarket(&super);
 			break;
 		}

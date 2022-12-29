@@ -30,3 +30,4 @@ int areThereCustomersAndProducts(SuperMarket* pSuperMarket);
 int doYouWantToShop();
 int getHowManyItems(int max);
 void superMarketPayment(SuperMarket* pSuperMarket);
+void checkOutForExit(SuperMarket* pSuperMarket);

@@ -286,3 +286,11 @@ void superMarketPayment(SuperMarket* pSuperMarket) {
 		printf("\nsomething went wrong, payment failed!\n");
 	}
 }
+
+void checkOutForExit(SuperMarket* pSuperMarket) {
+	for (int i = 0; i < pSuperMarket->numOfCustomers; i++) {
+		if (pSuperMarket->customers[i].pCart) {
+			customerPayment(&pSuperMarket->customers[i]);
+		}
+	}
+}
