@@ -50,7 +50,7 @@ void printAllProducts(const SuperMarket* pSuperMarket) {
 }
 
 void freeSuperMarket(SuperMarket* pSuperMarket) {
-	free(&pSuperMarket->name);
+	
 	freeAddress(&pSuperMarket->address);
 	for (int i = 0; i < pSuperMarket->numOfCustomers; i++) {
 		freeCustomer(&pSuperMarket->customers[i]);
@@ -58,7 +58,7 @@ void freeSuperMarket(SuperMarket* pSuperMarket) {
 	for (int i = 0; i < pSuperMarket->numOfProducts; i++) {
 		freeProduct(&pSuperMarket->products[i]);
 	}
-	free(pSuperMarket);
+	free(pSuperMarket->name);
 }
 
 int addProductToSuperMarket(SuperMarket* pSuperMarket) {
